@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <base href="http://localhost:8080/">
+</head>
+
+<body>
+
+
+<!--
+    1.绝对路径
+        在web项目中绝对路径是以/开始的路径
+            -- 在浏览器端解析的地址，默认会在前面添加 http://localhost:8080
+                    重定向服务器会将地址交给浏览器进行解析，所有重定向需要添加项目名
+            -- 在服务器端解析的地址，默认会在前面添加 http://localhost:8080/项目名
+                    转发：由服务器执行，不需要添加项目名
+                    web.xml中 url-pattern 的配置
+
+    2.base标签 + 相对路径
+
+
+
+-->
+<h1>index.html</h1><br>
+<!--  绝对路径-->
+<a href="/a/1.html">绝对路径访问1.html</a><br>
+<a href="/B/EServlet">绝对路径访问EServlet转发到1.html</a>
+<br><br><br>
+<!-- 相对路径 -->
+<a href="a/1.html">相对路径访问1.html</a>
+<a href="B/EServlet">相对路径访问EServlet转发到1.html</a>
+
+</body>
+</html>
