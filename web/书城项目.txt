@@ -1,0 +1,76 @@
+项目的架构：三层架构
+    表现层(web层，视图层，表示层...) : （用户能够直接访问的内容）Servlst、html...
+    业务逻辑层(Service层) : java类，提供处理业务的方法
+    数据持久化层： DAO层(和数据库交互)
+                只操作数据库，提供对数据库数据的CURD
+                项目中的DAO层因为需求经常发生变化,DAO层通常面向接口编程，使用接口规范对表的操作
+     数据库
+
+
+
+开发流程：
+    1.数据库表【bookstore,bs_user】
+    2.对应一张表创建一个javabean【user】
+    3.导入数据库相关的jar包【mysqlconnection数据库驱动,c3p0数据库连接池jar包和相关配置文件,DBUtils工具类】
+    4.修改c3p0配置文件的数据：数据库名、账号密码
+    5.JDBUtils工具类【获取数据库连接和释放连接的方法】
+    6.baseDAO提供对数据库的基本操作，包括【CURD，查询一条记录，查询一个集合】
+    7.UserDAO提供对bs_user表的所有操作
+            UserDAO 接口
+            UserDAOImpl 具体表操作的实现
+    8.完成注册功能注册
+        注册页面(regist.html)-->提交注册需求-->RegistServlst(收集用户的注册请求，调用UserDAO插入到数据库中)
+        -->如果插入成功-->重定向到注册注册成功页面(regist_success.html)
+        RegistServlet:
+            修改form表单的action的提交地址
+            修改页面中引入的css和jQuery文件的路径
+    9.完成登录功能
+        登录页面(login.html)-->提交登录请求-->LoginServlet(收集用户的登录请求，调用UserDAO从数据库中获取用户)
+        -->如果查询对象不为null-->登录成功-->重定向到登录成功的页面(login_success.html)
+        -->如果为null-->登录失败-->转发到登录页面让用户继续登录(longin.html)
+        LoginServlet：
+》》 第三阶段 项目优化
+   》》将html页面转换为jsp
+   》》提取页面相同内容，通过 include 静态引入 base link script
+   》》用户登录失败和注册失败，转发到登录或注册页面时，没有错误提示
+   》》用户注册失败时，转发到注册页面时，可以将用户的输入信息进行 回显
+   》》将一类的操作封装到一个servlet中，整合 servlet 到 userserlvet
+   》》我们经常获取的参数封装为一个对象，如果参数过多、获取代码过多，提供一个工具类方法专门用来封装对象
+   1.拷贝一个新的项目 bookstore——03
+        修改工程名
+        修改-首选项-web工程设置-修改 content root的值
+   2.修改html页面为jsp页面
+    》现在html页面添加jsp首行
+    》再修改文件的后缀名.jsp
+   3.提取页面中相同的内容，通过include引入
+      》提取base标签：link jquery
+        -每个页面引入base.jsp
+      》提取页面用户访问的头部
+        -在用户使用的页面中引入base.jsp
+      》提取管理员用户的导航栏
+        -在管理员用户页面中引入 manager_navigate.jsp
+    4.修改提交页面中的页面后缀和路径<和base引入标签拼接>
+    5.修改servlet中的重定向和转发文件后缀名
+    6.动态获取base标签的url地址《base.jsp中的base标签》
+    7.登录失败时，在转发的login.jsp页面给出错误tip
+        用户在login.jsp页面输入账号密码
+        提交给loginServlet，判断【if login fail，setAttr a errorMsg in request area 】
+        如果失败 ，转发到login.jsp页面【getAttr a errorMsg in request area】
+        此时显示登录失败
+    8.注册失败时，在转发的regist.jsp显示错误tip
+        用户在regist.jsp页面注册账号时
+        提交给registServlet，判断【if regist fail，setAttr a errorMsg in request area】
+        如果失败，转发到regist.jsp页面【this user is exist】
+        此时显示注册失败
+    9.模拟service对servlet进行整合
+        一个功能对应一个方法
+        在login.jsp页面的表单中添加一个参数，告诉servlet 的 请求方式
+        参数name的属性值一样method，value值不同
+        》提供一个userServlet处理所有的和用户有关的请求【登录 and 注册】
+            提供登录和注册的方法，在servlet中判断请求参数的method的value 进而调用不同的方法
+    10.使用反射，根据请求参数中的method的值来自动调用方法
+        》创建一个baseServlet对httpServlet进一步封装，项目中的其他servlet都继承baseServlet
+            在base中获得请求参数method的值，自动调用子类的方法
+            只有baseServlet有doGet 和 doPost 方法
+            所有的baseServlet的子类不能有doGet 和 doPost方法
+    11.
