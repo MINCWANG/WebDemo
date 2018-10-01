@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <c3p0-config>
 
 	<named-config name="webDataSource">
-		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/bookstore?useSSL=false
+		<property name="jdbcUrl">jdbc:mysql://127.0.0.1:3306/bookstore?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
 		</property>
 		<property name="driverClass">com.mysql.jdbc.Driver</property>
 		<property name="user">root</property>

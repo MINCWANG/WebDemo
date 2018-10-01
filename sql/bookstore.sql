@@ -3,4 +3,17 @@ CREATE TABLE bs_user(
 	username VARCHAR(100) NOT NULL UNIQUE,
 	PASSWORD VARCHAR(100) NOT NULL,
 	email VARCHAR(100)
-)
+);
+/*
+图书表sql语句
+ */
+
+CREATE TABLE bs_book(
+	id INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
+	title	VARCHAR(100) NOT NULL,
+	author 	VARCHAR(100) NOT NULL,
+	price	DOUBLE(11,2) NOT NULL,
+	sales	INTEGER(11),
+	stock	INTEGER(11),
+	img_path VARCHAR(100)
+);

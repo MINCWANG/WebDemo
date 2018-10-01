@@ -73,14 +73,14 @@
 							<div class="tit">
 								<h1>注册尚硅谷会员</h1>
 
-								<span class="errorMsg"><%= request.getAttribute("registFila")==null ? "" : (String) request.getAttribute("registFila")%></span>
+								<span class="errorMsg">${empty requestScope.registFail?"":requestScope.registFail}</span>
 							</div>
 							<div class="form">
 								<form action="UserServlet">
 									<%--  设置隐藏参数  method 值--%>
 									<input type="hidden" name="method" value="regist"/>
 									<label>用户名称：</label>
-									<input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" value="<%=request.getAttribute("username")==null?"":request.getAttribute("username")%>"/>
+									<input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" value="${empty requestScope.username?"":requestScope.username}"/>
 									<br />
 									<br />
 									<label>用户密码：</label>
@@ -92,7 +92,7 @@
 									<br />
 									<br />
 									<label>电子邮件：</label>
-									<input class="itxt" type="text" placeholder="请输入邮箱地址" autocomplete="off" tabindex="1" name="email" value="<%=request.getAttribute("email")==null?"":request.getAttribute("email")%>"/>
+									<input class="itxt" type="text" placeholder="请输入邮箱地址" autocomplete="off" tabindex="1" name="email" value="${empty requestScope.email?"":requestScope.email}"/>
 									<br />
 									<br />
 									<label>验证码：</label>

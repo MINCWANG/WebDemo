@@ -16,6 +16,8 @@ public class BaseServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 设置编码格式 在使用request对象之前
+        request.setCharacterEncoding("utf-8");
         //this代表子类，request和子类的一样
         // 获取页面的请求参数 method的值
         String method = request.getParameter("method");

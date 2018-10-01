@@ -1,9 +1,11 @@
 package cn.seecu.bookstore.dao;
 
+import cn.seecu.bookstore.bean.Book;
 import cn.seecu.bookstore.utils.JDBCUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -75,7 +77,7 @@ public class BaseDAO<T> {
      * @param params
      * @return
      */
-    public T getBean(String sql, Object...params) {
+    public T getBean(String sql, Object... params) {
         Connection conn = JDBCUtils.getConn();
         T t = null;
         try {
@@ -95,7 +97,7 @@ public class BaseDAO<T> {
      * @param params
      * @return
      */
-    public List<T> getBeanList(String sql, Object...params) {
+    public List<T> getBeanList(String sql, Object... params) {
         Connection conn = JDBCUtils.getConn();
         List<T> list = null;
         try {
@@ -106,5 +108,26 @@ public class BaseDAO<T> {
             JDBCUtils.releaseConn(conn);
         }
         return list;
+    }
+
+    /**
+     * 查询记录总条数方法
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public long getCount(String sql, Object... params) {
+        Connection conn = JDBCUtils.getConn();
+        long query = 0;
+        try {
+            // ScalarHandler：默认将查找第一行第一列的数据并封装为对象返回
+            query = (long) runner.query(conn, sql, new ScalarHandler(), params);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.releaseConn(conn);
+        }
+        return query;
     }
 }

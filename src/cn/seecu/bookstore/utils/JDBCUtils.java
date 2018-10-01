@@ -29,7 +29,7 @@ public class JDBCUtils {
         Connection conn = null;
         try {
             conn = source.getConnection();
-            System.out.println("建立连接");
+//            System.out.println("建立连接");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class JDBCUtils {
             try {
 
                 conn.close();
-                System.out.println("释放连接");
+//                System.out.println("释放连接");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -29,7 +29,10 @@
 		</div>
 		
 		<div id="main">
-			<form action="book_manager.jsp">
+			<form action="manger/BookManagerServlet" method="post" >
+				<input type="hidden" name="method" value="editBook">
+				<input type="hidden" name="id"	value="${book.id}">
+				<input type="hidden" name="imgPath"	value="${book.imgPath}">
 				<table>
 					<tr>
 						<td>名称</td>
@@ -40,12 +43,13 @@
 						<td colspan="2">操作</td>
 					</tr>		
 					<tr>
-						<td><input name="book_name" type="text" value="时间简史"/></td>
-						<td><input name="book_price" type="text" value="30.00"/></td>
-						<td><input name="book_author" type="text" value="霍金"/></td>
-						<td><input name="book_sales" type="text" value="200"/></td>
-						<td><input name="book_amount" type="text" value="300"/></td>
-						<td><input name="book_amount" type="submit" value="提交"/></td>
+
+						<td><input name="title" type="text" value="${book.title}"/></td>
+						<td><input name="price" type="text" value="${book.price}"/></td>
+						<td><input name="author" type="text" value="${book.author}"/></td>
+						<td><input name="sales" type="text" value="${book.sales}"/></td>
+						<td><input name="stock" type="text" value="${book.stock}"/></td>
+						<td><input  type="submit" value="提交"/></td>
 					</tr>	
 				</table>
 			</form>

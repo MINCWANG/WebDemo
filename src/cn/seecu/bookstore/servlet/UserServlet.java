@@ -51,7 +51,7 @@ public class UserServlet extends BaseServlet {
             // 查询失败，用户不存在，转发到登录的页面
             String errorMsg = "用户名或密码错误";
             request.setAttribute("errorMsg", errorMsg);
-            request.getRequestDispatcher(request.getContextPath()+"/pages/user/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/user/login.jsp").forward(request, response);
         } else {
             System.out.println("success");
             // 查询成功，用户存在，重定向到成功页面
@@ -73,10 +73,10 @@ public class UserServlet extends BaseServlet {
             response.sendRedirect("/pages/user/regist_success.jsp");
         } else {
 
-            String registFial = username + "已经存在";
+            String registFail = username + "已经存在";
             request.setAttribute("username", username);
             request.setAttribute("email", email);
-            request.setAttribute("registFila", registFial);
+            request.setAttribute("registFail", registFail);
             //注册失败,数据库已有相同账号,转发到注册页面
             request.getRequestDispatcher("/pages/user/regist.jsp").forward(request, response);
         }

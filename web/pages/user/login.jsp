@@ -27,15 +27,15 @@
 							</div>
 							<div class="msg_cont">
 								<b></b>
-								<%
-									// 获取错误信息
-									String errorMsg = (String) request.getAttribute("errorMsg");
-									if (errorMsg == null) {
-										// first open login.jsp page
-										errorMsg="请输入用户名和密码";
-									}
-								%>
-								<span class="errorMsg"><%=errorMsg%></span>
+								<%--<%--%>
+									<%--// 获取错误信息--%>
+									<%--String errorMsg = (String) request.getAttribute("errorMsg");--%>
+									<%--if (errorMsg == null) {--%>
+										<%--// first open login.jsp page--%>
+										<%--errorMsg="请输入用户名和密码";--%>
+									<%--}--%>
+								<%--%>--%>
+								<span class="errorMsg">${empty requestScope.errorMsg?"请输入用户名和密码":requestScope.errorMsg}</span>
 							</div>
 							<div class="form">
 								<form action="UserServlet">

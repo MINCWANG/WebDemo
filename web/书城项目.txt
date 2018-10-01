@@ -73,4 +73,102 @@
             在base中获得请求参数method的值，自动调用子类的方法
             只有baseServlet有doGet 和 doPost 方法
             所有的baseServlet的子类不能有doGet 和 doPost方法
-    11.
+    11.提供一个工具类测试方法 自动读取参数并封装为对象
+        使用BeanUtils.jar包
+项目第四阶段：
+        在项目中使用EL和JSTL
+    1.使用EL表达式替换jsp
+        login.jsp
+        regist.jsp
+        base.jsp    base标签中 拼接url地址
+        include 文件夹中所有的内容不希望用户能直接访问
+    2.使用jstl+el 完成图书的增删改查
+开发流程》》》从数据源--DAO--service--servlet【遍历调试】
+        》创建bs_book
+            int id,String title,String author,double price,int sales,int stock,String imgPath
+        》对应表创建 javaBean Book
+        》创建BookDao 和 BookDaoImpl
+              Book  getBookById(String id)
+              List<Book>  getBookList()
+              int  saveBook(Book book)
+              int  updateBook(Book newBook)
+              int  delBook(String id)
+         》创建BookService 和 BookServiceImpl
+         》创建BookMangerServlet 继承BaseServlet
+            getBookList() 查询所有图书
+                点击后台管理-图书管理超链接时获取图书的列表并展示
+                点击图书管理-请求交给BookMangerServlet的getBookList()方法处理再转发到bookManger.jsp展示
+                修改图书管理的超链接<a href='manger/BookMangerServlet?method=getBookList'>图书管理</a>
+            deleteBook() 删除指定的图书
+                在book_manger.jsp页面点击删除的超链接[含有id]
+                请求提交给BookMangerServlet的deleteBook()方法,修改<a href='manger/BookMangerServlet?method=getBookList'>删除</a>
+                删除之后：需要重定向到getBookList方法中重新查询图书集合
+                》点击删除时，提示友好提示框 confirm()
+            addBook() 添加图书
+                在book_manger.jsp页面点击添加图书跳转到book_add.jsp页面
+                book_add.jsp中的from表单提交给BookMangerServlet的addBook()方法处理<from action="manger/BookMangerServlet" method="post">
+                book_add.jsp 表单项的name属性值与book类属性名一致
+            乱码问题：
+                数据存到数据库时有乱码：post请求乱码
+                解决：在BaseServlet中的doget()方法中第一行设置编码格式 request.setCharacterEndcoding("utf-8");
+            getBook() 根据id查到需要修改的图书
+                book_manger.jsp页面点击修改按钮提交给getBook方法处理：<a href="manger/BookMangerServlet?method=getBook">修改</a>
+            editBook() 修改图书
+                注意：book_edit.jsp页面需要使用隐藏域携带id和img参数
+                book_edit.jsp页面点击提交时交给editBook()方法处理：<from action="manger/BookMangerServlet">
+            》以后开发中不推荐使用不带条件的sql语句
+                不带条件的sql语句查询效率低，影响用户体验
+                SELECT * 不要使用
+                一页数据过多，使用分页展示
+                技术基础：SELECT * FROM bs_book limit index,size
+                       例如： SELECT * FROM bs_book limit 5,0 从第0条到第5条数据
+            》创建Page类
+                List<T> data;
+                int pageNumber;
+                int totalPage;
+                int totalCount;
+                int size;
+                int index;
+            》分页访问流程
+                用户访问 携带pageNumber --》BookManagerServlet【findPage()获取pageNumber，设置size】
+                        --》调用BookService处理分页的业务逻辑【getPage()：创建一个page类，将size和pageNumber设置给page对象，index可以计算得到】
+                        --》调用BookDao查询分页数据【getPageBook(Page page)：根据page对象的size和index查询data，查询图书总数量totalCount，totalPage可以计算得到】
+                            page对象的所有属性都初始化成功，return
+                开发流程：倒序开发
+                        BookDao：Page<Book> getPageBook(Page<Book> page) ;
+                            查询和数据库相关的数据[查询图书记录总条数，查询分页显示的图书集合]
+                            》》在BaseDao中提供一个查询记录总条数的方法
+                                getCount()
+                            》》查询图书总条数：totalCount，page.setTotalCount(totalCount)
+                            》》查询分页图书集合：booklist = getBeanList() --》 page.setData(booklist)
+                        BookService：
+                            创建Page对象，将size和pageNumber设置给对象
+                                getPage()
+                            》》创建Page()对象
+                            》》pageNumber：转换为int类型设置给page对象
+                            》》size：设置给page对象
+                        BookManagerServlet:
+                            findPage()：处理用户的分页请求
+                                      》》获取pageNumber，设置size
+                                      》》调用service处理业务得到page对象
+                                      》》将page设置到域中
+                                      》》转发到book_manager.jsp页面展示分页数据
+                        》》修改manager.jsp页面中图书管理的超链接，点击时访问BookManagerServlet?method=findPage查询分页数据
+                        》修改manager.jsp页面中图书管理超链接，点击时访问BookMangerServlet.findPage查询分页数据
+                        》修改book_manager.jsp页面获取域中数据显示的方式
+                        》在page类的getPageNumber中可以显示pageNumber的范围
+                        》分页导航栏
+                            如果页码过多，页码显示太乱
+                            控制一次显示5个页码
+                                【1】  2   3   4   5
+                                  1  【2】 3   4   5
+                                  1   2  【3】 4   5
+                                  2   3  【4】 5   6
+
+                                                                    begin       end
+                                          总页码《=5                   1            totalPage
+                                        总页码》5
+                                          pageNumber《3               1            5
+                                          pageNumber》=3             pageNumber-2 pageNumber+2
+                                            end》=totalPage          totalPage-4  totalPage
+                                            end《totalPage
