@@ -1,12 +1,14 @@
 package cn.seecu.bookstore.bean;
 
+import java.io.Serializable;
+
 /**
  * @program: WebDemo
  * @description: 对应user表的
  * @author: Mr.Wang
  * @create: 2018-09-03 23:10
  **/
-public class User {
+public class User implements Serializable {
     /**
      * user 的id
      */

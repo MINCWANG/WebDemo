@@ -166,9 +166,82 @@
                                   2   3  【4】 5   6
 
                                                                     begin       end
-                                          总页码《=5                   1            totalPage
-                                        总页码》5
-                                          pageNumber《3               1            5
-                                          pageNumber》=3             pageNumber-2 pageNumber+2
-                                            end》=totalPage          totalPage-4  totalPage
-                                            end《totalPage
+                                                                                                   总页码《=5                   1            totalPage
+                                                                                                 总页码》5
+                                                                                                   pageNumber《3               1            5
+                                                                                                   pageNumber》=3             pageNumber-2 pageNumber+2
+                                                                                                     end》=totalPage          totalPage-4  totalPage
+                                                                                                     end《totalPage
+                        》提取页码导航栏：
+                            在查询分页数据时：<a href="manager/BookManagerServlet?method=findPage&pageNumber=${page.pageNumber+1 }">下一页</a>
+                                url地址需要动态获取
+                                第一次访问BookManagerServlet.findPage时，获取路径
+                            --Page类：添加Path属性，访问当前页面的路径
+                            --创建Utils工具类方法 getPath()：第一次请求时获取分页路径
+                            --在book_manager.jsp页面中修改navigate页码导航栏中的地址为动态获取，page.path
+                            --提取导航栏到navigate.jsp页面中
+                            --在book_manager.jsp页面中引用导航栏
+                        》》项目优化：
+                            --以前的删除修改后都是调用getBookList方法替换成findPage方法
+                            --删除图书以后，跳转到首页
+                                修改：跳转到删除时所在页面
+                                获取referer：上一个页面的路径
+                                删除后：跳转到上一个页面 referer
+                》》提供一个用户端查询图书的信息的Servlet
+                        --BookClientServlet
+                            findPage
+                        --index.jsp：展示图书分页的数据
+                        --解决index.jsp页面不能直接访问的问题
+                            index.jsp页面访问时，直接转发到BookClientServlet.findPage()
+                            查询到数据之后转发到图书展示界面，再提供一个页面用来展示首页数据(采用转发到另一个页面防止index页面的死循环)
+                        --完成客户端：根据价格查询分页数据的功能
+                            BookDao：提供根据价格查询分页数据的方法 getPageByPrice()
+                            BookService：getPageByPrice()
+                            BookClientServlet：findPageByPrice()
+                            --点击list.jsp中的查询按钮
+》》第五阶段
+    》1、保存用户的登录状态
+            -UserServlet，用户登录成功后将获取user对象保存到session域中
+            -在所有页面显示用户登录的状态
+            -所有的javaBean实现序列化接口
+    》2、注销用户
+    》3、注册验证码图片
+            -引入Kpatcha.jar包
+            -配置KaptchaServlet
+            -regist.jsp页面中使用验证码
+            -点击图片自动刷新验证码
+                给验证码绑定点击属性 并拼接自增字符串，兼容IE等浏览器
+            -UserServlet中验证Kaptcha
+完成购物车功能：
+    》1、基于Cookie：每次用户可以将购买的商品信息交给服务器，服务器将信息作为cookie交给浏览器  《不使用》
+    》2、基于Session：用户第一次购买图书时，服务器会为其创建一个购物车对象存到session域中
+                    用户以后再次购买图书时，服务器将添加的图书保存到session域中的购物车
+                    用户结账时，取出session中的购物车进行结账操作
+                  在服务器内存中保存
+    》3、基于数据库： 比session多了Dao
+                    持久化保存数据
+1、创建购物车和购物项类
+    CartItem：
+        Book book;
+        int count;
+        double amount;
+    ShoppingCart：
+        Map<String bookId,CartItem> map = new LinkHashMap<>();
+        int totalCount;
+        double totalAmount;
+       -没有Dao操作，所有的购物项的CURD都写在购物车中
+        -addBook2Cart(String bookId); 添加图书到购物车
+        -delCartItem(String bookId); 删除购物项
+        -clearCart(); 清空购物车
+        -getCartItemList(); 将map转换为list，b便于查询数据
+        -解决double类型的精度问题
+    CartServlet：处理用户的购物车和相关请求
+        -addBook2Cart():
+        -给list页面加入购物车按钮绑定事件，点击提交给addBook2Cart，并将参数bookId一同传入
+        -clear():清空购物车
+        -delCartItem():删除指定购物项
+        -updateCount():修改购物项的数量
+    cart.jsp:
+        -完成购物车数据的显示
+
+

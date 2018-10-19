@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>尚硅谷会员注册页面</title>
 
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 <style type="text/css">
 	.login_form{
 		height:420px;
@@ -16,6 +16,15 @@
 
 <script type="text/javascript">
 	$(function(){
+        var i = 1;
+        // 刷新验证码
+        $("#codeImg").click(function () {
+
+            this.src = "code.jpg"+i++;
+
+        });
+
+
 		//1、查找注册按钮绑定单击事件
 		$("#sub_btn").click(function(){
 			//2、点击时 获取用户注册信息逐个验证
@@ -73,7 +82,7 @@
 							<div class="tit">
 								<h1>注册尚硅谷会员</h1>
 
-								<span class="errorMsg">${empty requestScope.registFail?"":requestScope.registFail}</span>
+								<span class="errorMsg">${empty requestScope.errorMsg?"":requestScope.errorMsg}</span>
 							</div>
 							<div class="form">
 								<form action="UserServlet">
@@ -97,7 +106,8 @@
 									<br />
 									<label>验证码：</label>
 									<input class="itxt" type="text" style="width: 150px;" name="code"/>
-									<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">									
+									<img alt="点击刷新" src="code.jpg" id="codeImg" style="float: right; margin-right: 40px" width="90px" height="40px">
+
 									<br />
 									<br />
 									<input type="submit" value="注册" id="sub_btn" />

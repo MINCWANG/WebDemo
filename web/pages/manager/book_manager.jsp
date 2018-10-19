@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>图书管理</title>
-    <%@include file="/pages/include/base.jsp" %>
+    <%@include file="/WEB-INF/include/base.jsp" %>
     <script>
         $(function () {
             $('.delBook').click(function () {
@@ -25,7 +25,7 @@
     <img class="logo_img" alt="" src="static/img/logo.gif">
     <span class="wel_word">图书管理系统</span>
 
-    <%@include file="/pages/include/manager_navigate.jsp" %>
+    <%@include file="/WEB-INF/include/manager_navigate.jsp" %>
 </div>
 
 <div id="main">
@@ -79,60 +79,8 @@
         </tr>
     </table>
     <br>
-    <div id="page_nav">
-        <a href="manager/BookManagerServlet?method=findPage&pageNumber=1">首页</a>
-        <a href="manager/BookManagerServlet?method=findPage&pageNumber=${page.pageNumber-1}">上一页</a>
-        <%-- 控制分页页码显示，一页只显示5个页码
-                begin和end只能使用变量，动态计算起始和结束索引
-                1.判断总页码
-                    page.totalPage<=5 begin：1  end：totalPage
-                                                                begin       end
-                                          总页码《=5                   1            totalPage
-                                        总页码》5
-                                          pageNumber《3               1            5
-                                          pageNumber》=3             pageNumber-2 pageNumber+2
-                                            end》=totalPage          totalPage-4  totalPage
-                                            end《totalPage
-        --%>
-        <c:choose>
-            <c:when test="${page.totalPage<=5}">
-                <c:set var="begin" value="1"></c:set>
-                <c:set var="end" value="${page.totalPage}"></c:set>
-            </c:when>
-            <c:otherwise>
-                <c:choose>
-                    <c:when test="${page.pageNumber<=3}">
-                        <c:set var="begin" value="1"></c:set>
-                        <c:set var="end" value="5"></c:set>
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="begin" value="${page.pageNumber-2}"></c:set>
-                        <c:set var="end" value="${page.pageNumber+2}"></c:set>
-                        <c:if test="${end >= page.totalPage}">
-                            <c:set var="begin" value="${page.totalPage-4}"></c:set>
-                            <c:set var="end" value="${page.totalPage}"></c:set>
-                        </c:if>
-                    </c:otherwise>
-                </c:choose>
-            </c:otherwise>
-        </c:choose>
-        <%-- 遍历导航索引栏 --%>
-        <c:forEach begin="${begin}" end="${end}" var="index">
-            <c:choose>
-                <c:when test="${index==page.pageNumber}">
-                    <span style="color: red">【${index}】</span>
-                </c:when>
-                <c:otherwise>
-
-                    <a href="manager/BookManagerServlet?method=findPage&pageNumber=${index}">${index}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-        <a href="manager/BookManagerServlet?method=findPage&pageNumber=${page.pageNumber+1}">下一页</a>
-        <a href="manager/BookManagerServlet?method=findPage&pageNumber=${page.totalPage}">末页</a>
-        共${page.totalPage }页，${page.totalCount }条记录 到第<input value="${page.pageNumber }" name="pn" id="pn_input"/>页
-        <input type="button" value="确定">
-    </div>
+    <%--引入分页导航栏 --%>
+    <%@include file="/WEB-INF/include/navigate.jsp"%>
     <br>
 </div>
 

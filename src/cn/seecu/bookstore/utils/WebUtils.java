@@ -34,4 +34,19 @@ public class WebUtils {
         }
         return t;
     }
+
+    public static String getPath(HttpServletRequest request){
+        //       uri /bookstore/manager/BookManagerServlet
+        String uri = request.getRequestURI();
+//       queryString  method=findPage&pageNumber=1
+        String queryString = request.getQueryString();
+        // queryString中的pageNumber不需要使用。需要截取
+        if (queryString != null &&   queryString.contains("&pageNumber")){
+            queryString = queryString.substring(0, queryString.indexOf("&pageNumber"));
+        }
+        //System.out.println(uri + " --- -- -- " + queryString);
+        String path = uri+"?"+queryString;
+        // 获取pageNumber
+        return path;
+    }
 }

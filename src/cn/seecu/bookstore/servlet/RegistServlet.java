@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegistServlet extends HttpServlet {
@@ -32,14 +33,14 @@ public class RegistServlet extends HttpServlet {
             response.sendRedirect("/pages/user/regist_success.jsp");
         } else {
 
-            String registFial = username+"已经存在";
-            request.setAttribute("username",username);
-            request.setAttribute("email",email);
-            request.setAttribute("registFila",registFial);
+            String registFial = username + "已经存在";
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("registFila", registFial);
             //注册失败,数据库已有相同账号,转发到注册页面
             request.getRequestDispatcher("/pages/user/regist.jsp").forward(request, response);
         }
 
-
     }
 }
+

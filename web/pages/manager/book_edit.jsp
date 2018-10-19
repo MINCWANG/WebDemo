@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>编辑图书</title>
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 <style type="text/css">
 	h1 {
 		text-align: center;
@@ -25,11 +25,12 @@
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
 			<span class="wel_word">编辑图书</span>
 
-			<%@include file="/pages/include/manager_navigate.jsp"%>
+			<%@include file="/WEB-INF/include/manager_navigate.jsp"%>
 		</div>
 		
 		<div id="main">
-			<form action="manger/BookManagerServlet" method="post" >
+			<form action="manager/BookManagerServlet" method="post" >
+				<input type="hidden" name="referer" value="${referer}">
 				<input type="hidden" name="method" value="editBook">
 				<input type="hidden" name="id"	value="${book.id}">
 				<input type="hidden" name="imgPath"	value="${book.imgPath}">

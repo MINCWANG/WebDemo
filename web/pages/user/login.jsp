@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 
 <title>尚硅谷会员登录页面</title>
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 </head>
 <body>
 		<div id="login_header">

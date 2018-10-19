@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>订单管理</title>
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 </head>
 <body>
 	
@@ -12,7 +12,7 @@
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
 			<span class="wel_word">订单管理系统</span>
 
-		<%@include file="/pages/include/manager_navigate.jsp"%>
+		<%@include file="/WEB-INF/include/manager_navigate.jsp"%>
 	</div>
 	
 	<div id="main">

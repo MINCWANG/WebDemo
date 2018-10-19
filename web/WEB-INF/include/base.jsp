@@ -7,7 +7,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%-- 动态获取访问地址--%>
 
 <base href="http://<%= request.getServerName()%>:<%= request.getServerPort()%><%= request.getContextPath()%>/"/>

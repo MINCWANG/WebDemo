@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>尚硅谷会员注册页面</title>
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 <style type="text/css">
 	h1 {
 		text-align: center;
@@ -20,7 +20,7 @@
 		<div id="header">
 				<img class="logo_img" alt="" src="static/img/logo.gif" >
 
-			<%@include file="/pages/include/user_header.jsp"%>
+			<%@include file="/WEB-INF/include/user_header.jsp"%>
 		</div>
 		
 		<div id="main">

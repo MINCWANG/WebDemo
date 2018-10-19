@@ -51,11 +51,70 @@
         <servlet-name>BookManagerServlet</servlet-name>
         <servlet-class>cn.seecu.bookstore.servlet.BookManagerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookClientServlet</servlet-name>
+        <servlet-class>cn.seecu.bookstore.servlet.BookClientServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookClientServlet</servlet-name>
+        <url-pattern>/BookClientServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookManagerServlet</servlet-name>
         <url-pattern>/manager/BookManagerServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+        <!-- 设置验证码的图片边框 -->
+        <init-param>
+            <param-name>kaptcha.border</param-name>
+            <param-value>yes</param-value>
+        </init-param>
+        <!-- 设置验证码图片的宽度 -->
+        <init-param>
+            <param-name>kaptcha.image.width</param-name>
+            <param-value>200</param-value>
+        </init-param>
+        <!-- 设置验证码图片的高度 -->
+        <init-param>
+            <param-name>kaptcha.image.height</param-name>
+            <param-value>50</param-value>
+        </init-param>
+        <!-- 设置验证码图片的使用的字符 -->
+        <init-param>
+            <param-name>kaptcha.textproducer.char.string</param-name>
+            <param-value>abcde23458fynmpwx</param-value>
+        </init-param>
+        <!-- 设置验证码字符间距  -->
+        <init-param>
+            <param-name>kaptcha.textproducer.char.space</param-name>
+            <param-value>6</param-value>
+        </init-param>
+        <!-- 设置在session域中存储的key -->
+        <init-param>
+            <param-name>kaptcha.session.key</param-name>
+            <param-value>code</param-value>
+        </init-param>
+        <!-- 设置验证码中字符的数量 -->
+        <init-param>
+            <param-name>kaptcha.textproducer.char.length</param-name>
+            <param-value>4</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>cn.seecu.bookstore.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/CartServlet</url-pattern>
+    </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <url-pattern>/code.jpg</url-pattern>
+    </servlet-mapping>
 
 
 
