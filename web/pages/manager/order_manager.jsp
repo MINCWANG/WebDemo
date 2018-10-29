@@ -16,35 +16,35 @@
 	</div>
 	
 	<div id="main">
-		<table>
-			<tr>
-				<td>日期</td>
-				<td>金额</td>
-				<td>详情</td>
-				<td>发货</td>
-				
-			</tr>		
-			<tr>
-				<td>2015.04.23</td>
-				<td>90.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td><a href="#">点击发货</a></td>
-			</tr>	
-			
-			<tr>
-				<td>2015.04.20</td>
-				<td>20.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>已发货</td>
-			</tr>	
-			
-			<tr>
-				<td>2014.01.23</td>
-				<td>190.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>等待收货</td>
-			</tr>		
-		</table>
+		<c:choose>
+			<c:when test="${empty requestScope.orderList}">
+				<h2>顾客没有下单</h2>
+			</c:when>
+			<c:otherwise>
+				<table>
+					<tr>
+						<td>日期</td>
+						<td>金额</td>
+						<td>详情</td>
+						<td>发货</td>
+
+					</tr>
+					<c:forEach items="${requestScope.orderList}" var="order">
+						<tr>
+							<td>${order.orderTime}</td>
+							<td>${order.totalAmount}</td>
+							<td>
+								<c:if test="${order.state == 0}"><a href="OrderManagerServlet?method=sendGoods&orderId=${order.id}">点击发货</a></c:if>
+								<c:if test="${order.state == 1}">已发货</c:if>
+								<c:if test="${order.state == 2}">订单完成</c:if>
+
+							<td><a href="#">查看详情</a></td></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:otherwise>
+		</c:choose>
+
 	</div>
 	
 	<div id="bottom">

@@ -4,6 +4,7 @@ import cn.seecu.bookstore.bean.User;
 import cn.seecu.bookstore.service.UserService;
 import cn.seecu.bookstore.service.impl.UserServiceImpl;
 import cn.seecu.bookstore.utils.WebUtils;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -51,18 +52,19 @@ public class UserServlet extends BaseServlet {
         User user = WebUtils.param2Bean(request, new User());
         //3.调用UserDAO查询用户
 
-        User login = service.login(user);
+        User loginUser = service.login(user);
+
 //        User usernameAndPassword = dao.getUserByUsernameAndPassword(user);
         //4.判断
 //        System.out.println(login);
-        if (login == null) {
+        if (loginUser == null) {
             // 查询失败，用户不存在，转发到登录的页面
             String errorMsg = "用户名或密码错误";
             request.setAttribute("errorMsg", errorMsg);
             request.getRequestDispatcher("pages/user/login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("user",user);
+            session.setAttribute("user",loginUser);
 /**
  * 登录状态的持久化设置
  */

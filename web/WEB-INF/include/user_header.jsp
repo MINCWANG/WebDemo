@@ -13,7 +13,9 @@
 
 			<a href="UserServlet?method=logout">注销</a> &nbsp;&nbsp;
 			<a href="pages/cart/cart.jsp">购物车</a>
+			<a href="OrderClientServlet?method=getOrderList">我的订单</a>
 			<a href="pages/manager/manager.jsp">后台管理</a>
+			<a href="index.jsp">返回</a>
 		</div>
 
 	</c:when>

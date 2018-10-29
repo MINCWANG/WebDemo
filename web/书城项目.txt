@@ -244,4 +244,85 @@
     cart.jsp:
         -完成购物车数据的显示
 
+》》结账功能：将购物车转换为订单
+        -判断用户是否登录【订单和用户相关联】
+        -处理结账【将购物车转换为订单】
+        -订单需要保存在数据库里
+        -OrderDao【将订单保存在数据库里】
+        -OrderService【处理订单相关业务】
+        -OrderServlet【处理订单相关的请求】
 
+
+    流程：
+        用户对订单相关的操作：
+            保存订单
+            根据用户id查询自己的订单：
+            修改某个订单的状态：1-->2
+            根据订单id查看所有的订单项
+            OrderClientServlet【表现层】
+
+        管理员对订单相关的操作：
+            查询所有的订单：
+            根据id修改订单的状态：0-->1
+            根据订单id查看所有的订单项
+            OrderManagerServlet【表现层】
+        【业务层】
+            OrderService【业务层，管理员和用户的业务在此处理】
+                String createOrder(ShoppingCart cart,User user);创建订单的业务方法，如何将购物车转为订单，将购物项转为订单项
+                List<Order> getOrderListById(String userId);查询用户订单的业务
+                Boolean updateState(String orderId,int state);修改订单的状态【用户和管理员都会使用】
+            OrderItemService【处理和订单项的业务层】
+                List<OrderItem> getOrderItemListById(String orderId);根据订单id查询所属订单项【管理员和用户都会使用】
+        【持久化层】
+            OrderDao;
+                int saveOrder(Order order);用户保存订单的方法
+                List<Order> getOrderListById(String userId);用户用户id查询订单
+                List<Order> getOrderList();管理员查询所有订单集合
+                Boolean updateState(String orderId,int state);修改订单状态
+            OrderItemDao;
+                int saveOrderItem(OrderItem item);用户保存订单项的方法
+                List<OrderItem> getOrderItemListById(String orderId);根据订单id查询所属订单项
+
+        购物车-----》订单     一个购物车对应一个订单
+        购物项-----》订单项    一个购物项对应一个订单项
+            购物车通过ShoppingCart的Map保存购物项
+            订单 单独保存，为订单创建一个id，保存订单项时可以为订单项设置一个外键关联的id
+            订单表和订单项表 一对多
+    创建表：
+        订单表----》购物车
+            int totalCount;商品总数量
+            double totalAmount;商品总金额
+            Date orderTime;创建订单的时间
+            int state;订单状态【0:未发货，1:已发货，2:已完成】
+            String id; 【订单的id，比较重要
+                订单唯一的id
+                便于售后查询
+                不能暴露公司隐私（使用当前的时间戳+用户id，确保保存在数据库的id是唯一的）】
+         int userId;【创建一个外键和bs_user表外键关联】
+         user表和order表   【1:n】
+         订单项表---》购物项【要保存购买时的信息】
+            Integer id;订单项id
+            String title;图书标题
+            String author;图书作者
+            String img_path;图书封面
+            double price;单价
+            int count;单品数量
+            double amount;单品总价
+            String order_id;关联订单项表和订单表
+        -根据表创建对应的类：
+            Order：订单类--对应购物车类
+            OrderItem：订单项类---对应购物项
+        -创建OrderDao
+        -创建OrderItemDao
+        -测试OrderDao和OrderItemDao
+        -创建OrderService：
+            String createOrder(ShoppingCart cart,User user);创建业务订单的方法
+            List<Order> getOrderListByUserId(int userId);根据用户id查询用户订单集合
+            List<Order>  getOrderList();管理员查询所有订单
+        -创建OrderClientService：
+            checkOut(); 用户结账方法
+        -优化项目
+        提供批处理：在修改图书销量和库存时，使用的sql语句一样，可以使用批处理
+        -BaseDao ： 提供批处理的方法 batchUpdate();
+        -BookDao: 批量修改图书销量和库存的方法 batchUpdateStockAndSales();
+        -OrderItemDao:批量出入orderItem的方法 batchSaveOrderItem();

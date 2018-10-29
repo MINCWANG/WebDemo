@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>结算页面</title>
-	<%@include file="/pages/include/base.jsp"%>
+	<%@include file="/WEB-INF/include/base.jsp"%>
 <style type="text/css">
 	h1 {
 		text-align: center;
@@ -18,12 +18,12 @@
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
 			<span class="wel_word">结算</span>
 
-		<%@include file="/pages/include/user_header.jsp"%>
+		<%@include file="/WEB-INF/include/user_header.jsp"%>
 	</div>
 	
 	<div id="main">
 		
-		<h1>你的订单已结算，订单号为2937474382928484747</h1>
+		<h1>你的订单已结算，订单号为<span style="color: green">${requestScope.orderId}</span></h1>
 		
 	
 	</div>

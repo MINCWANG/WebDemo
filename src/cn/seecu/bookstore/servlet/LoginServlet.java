@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
         User user = new User(null, username, password, null);
         //3.调用UserDAO查询用户
         User login = service.login(user);
+
 //        User usernameAndPassword = dao.getUserByUsernameAndPassword(user);
         //4.判断
         if (login == null) {

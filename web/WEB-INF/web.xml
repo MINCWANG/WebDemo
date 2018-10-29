@@ -106,6 +106,22 @@
         <servlet-name>CartServlet</servlet-name>
         <servlet-class>cn.seecu.bookstore.servlet.CartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderClientServlet</servlet-name>
+        <servlet-class>cn.seecu.bookstore.servlet.OrderClientServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderManagerServlet</servlet-name>
+        <servlet-class>cn.seecu.bookstore.servlet.OrderManagerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderManagerServlet</servlet-name>
+        <url-pattern>/OrderManagerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderClientServlet</servlet-name>
+        <url-pattern>/OrderClientServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/CartServlet</url-pattern>

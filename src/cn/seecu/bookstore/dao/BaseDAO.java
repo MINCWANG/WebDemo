@@ -69,6 +69,22 @@ public class BaseDAO<T> {
         return update;
     }
 
+    /**
+     * 批处理方法
+     * @param sql   批处理执行的语句
+     * @param params    第一维：sql语句需要的次数 第二维：sql语句需要的参数
+     */
+     public void bitchUpdate(String sql,Object[][] params){
+         Connection conn = JDBCUtils.getConn();
+
+         try {
+             runner.batch(conn,sql,params);
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }finally {
+             JDBCUtils.releaseConn(conn);
+         }
+     }
 
     /**
      * 查询一条记录 并封装为对象的方法
