@@ -62,9 +62,11 @@ public class BaseDAO<T> {
              */
             update = runner.update(conn, sql, params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            JDBCUtils.releaseConn(conn);
+            // JDBCUtils.releaseConn(conn);
+
         }
         return update;
     }
@@ -80,9 +82,11 @@ public class BaseDAO<T> {
          try {
              runner.batch(conn,sql,params);
          } catch (SQLException e) {
-             e.printStackTrace();
+             // e.printStackTrace();
+             throw new RuntimeException();
          }finally {
-             JDBCUtils.releaseConn(conn);
+             // JDBCUtils.releaseConn(conn);
+
          }
      }
 
@@ -99,9 +103,11 @@ public class BaseDAO<T> {
         try {
             t = runner.query(conn, sql, new BeanHandler<>(type), params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            JDBCUtils.releaseConn(conn);
+            // JDBCUtils.releaseConn(conn);
+
         }
 
         return t;
@@ -120,9 +126,11 @@ public class BaseDAO<T> {
         try {
             list = runner.query(conn, sql, new BeanListHandler<>(type), params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            JDBCUtils.releaseConn(conn);
+            // JDBCUtils.releaseConn(conn);
+
         }
         return list;
     }
@@ -141,9 +149,10 @@ public class BaseDAO<T> {
             // ScalarHandler：默认将查找第一行第一列的数据并封装为对象返回
             query = (long) runner.query(conn, sql, new ScalarHandler(), params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            JDBCUtils.releaseConn(conn);
+            // JDBCUtils.releaseConn(conn);
         }
         return query;
     }

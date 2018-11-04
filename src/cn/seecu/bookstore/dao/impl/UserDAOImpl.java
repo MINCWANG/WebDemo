@@ -29,7 +29,13 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
     @Override
     public int saveUser(User user) {
         String sql = "INSERT INTO bs_user(username , password, email) VALUES(?,?,?)";
-        return this.upDate(sql, user.getUsername(),user.getPassword(),user.getEmail());
+
+        try {
+            return this.upDate(sql, user.getUsername(),user.getPassword(),user.getEmail());
+        } catch (Exception e) {
+            // e.printStackTrace();
+            return 0;
+        }
     }
 
 
