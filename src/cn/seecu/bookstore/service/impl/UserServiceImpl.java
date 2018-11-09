@@ -26,4 +26,12 @@ public class UserServiceImpl implements UserService {
     public boolean regist(User user) {
         return dao.saveUser(user)>0;
     }
+
+    // 如果user==null true 代表用户名可用
+    // 如果user==null false 代表用户名已占用
+    @Override
+    public boolean checkUserByUsername(String name) {
+        User user = dao.checkUerByUsername(name);
+        return user==null;
+    }
 }

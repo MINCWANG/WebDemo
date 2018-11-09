@@ -38,5 +38,11 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
         }
     }
 
+    @Override
+    public User checkUerByUsername(String name) {
+        String sql = "SELECT id , username , password , email FROM bs_user WHERE username=? ";
+        return this.getBean(sql,name);
+    }
+
 
 }

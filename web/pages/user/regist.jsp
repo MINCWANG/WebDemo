@@ -16,6 +16,31 @@
 
 <script type="text/javascript">
 	$(function(){
+        // 给用户名输入框绑定  内容改变监听，当内容改变将用户名提交给服务器判断
+        $('[name=username]').change(function () {
+			// 获取用户名
+			var name = this.value;
+			// 发送AJAX请求
+            var url = "${pageContext.request.contextPath}/UserServlet";
+            var data = {"method":"checkUsername","username":name};
+            var callback = function (result) {
+				if (result == 0) {
+				// 用户名可用为1
+				// 用户名不可用为0
+                    // 根据响应结果给出提示
+                    $('.errorMsg').text("用户名被占用");
+                    $('#sub_btn').attr("disabled", true);
+                    $('#sub_btn').css("background-color", "gray");
+                }else {
+                    $('.errorMsg').html("<span style='color:green'>用户名可用</span>");
+                    $('#sub_btn').attr("disabled", false);
+                    $('#sub_btn').css("background-color", "#42cb3c");
+                }
+            };
+            var type = "json";
+            $.post(url,data,callback,type);
+        });
+
         var i = 1;
         // 刷新验证码
         $("#codeImg").click(function () {

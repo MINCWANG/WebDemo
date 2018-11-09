@@ -9,19 +9,35 @@
 <%@ include file="/WEB-INF/include/base.jsp" %>
 <script>
 	$(function(){
+
+
+
 		//给input设置内容改变的监听，内容改变将数量和id交给CartServlet.updateCount处理
 		$(".countInp").change(function(){
 			var count = this.value;
 			var id = this.id;
+            var $amountTd = $(this).parents('tr').find('td:eq(3)');
 			//前端验证count是不是一个正确数字
 			if(isNaN(count)){
 				this.value = this.defaultValue;
 				alert("请输入一个正确的数字");
 			}else{
 				//alert(count+"--"+id);
-				window.location = "${pageContext.request.contextPath}/CartServlet?method=updateCount&bookId="+id+"&count="+count;
-				
+				//window.location = "${pageContext.request.contextPath}/CartServlet?method=updateCount&bookId="+id+"&count="+count;
+                var url = "${pageContext.request.contextPath}/CartServlet";
+                var data = {"method":"updateCount","bookId":id,"count":count};
+                var callback = function (result) {
+                //    将json字符串转为json对象
+					// alert(JSON.parse(result));
+					// 修改页面中的内容数据
+                    $('.b_count').text(result.totalCount);
+                    $('.b_price').text(result.totalAmount);
+                    $amountTd.text(result.amount);
+                };
+                var type = "json";
+                $.post(url,data,callback,type);
 			}
+
 		});
 	});
 
@@ -57,7 +73,7 @@
 						<td>${item.book.title }</td>
 						<td><input type="text" id="${item.book.id }" class="countInp" value="${item.count }"style="width: 30px;text-align: center;" /></td>
 						<td>${item.book.price }</td>
-						<td>${item.amount }</td>
+						<td class="amount">${item.amount }</td>
 						<td><a href="CartServlet?method=delItem&bookId=${item.book.id }">删除</a></td>
 					</tr>	
 				</c:forEach>		

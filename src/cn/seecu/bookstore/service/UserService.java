@@ -13,4 +13,6 @@ public interface UserService {
     User login(User user);
 
     boolean regist(User user);
+
+    boolean checkUserByUsername(String name);
 }

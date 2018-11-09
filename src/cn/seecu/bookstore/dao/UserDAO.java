@@ -26,5 +26,11 @@ public interface UserDAO {
      */
     int saveUser(User user);
 
+    /**
+     * 通过Username在数据库中查询用户是否存在
+     * @param name
+     * @return
+     */
+    User checkUerByUsername(String name);
 
 }

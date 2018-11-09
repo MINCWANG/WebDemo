@@ -14,7 +14,19 @@ import java.io.IOException;
 public class UserServlet extends BaseServlet {
     private UserService service = new UserServiceImpl();
 
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void checkUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        boolean b = service.checkUserByUsername(username);
+        if (b){
+        //     代表用户名可用
+            response.getWriter().write("1");
+        }else {
+            // 代表用户名已占用
+            response.getWriter().write("0");
+        }
+    }
+
+    //    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        doGet(request, response);
 //    }
 //
