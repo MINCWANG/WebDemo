@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,7 @@
                 <c:forEach items="${requestScope.orderList}" var="order">
                     <tr>
                         <td>${order.id}</td>
-                        <td>${order.orderTime}</td>
+                        <td><fmt:formatDate value="${order.orderTime}" type="both" dateStyle="short" timeStyle="short"></fmt:formatDate></td>
                         <td>${order.totalAmount}</td>
                         <td>
                             <c:if test="${order.state == 0}">未发货</c:if>
