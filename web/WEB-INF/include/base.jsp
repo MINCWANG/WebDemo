@@ -11,5 +11,5 @@
 <%-- 动态获取访问地址--%>
 
 <base href="http://<%= request.getServerName()%>:<%= request.getServerPort()%><%= request.getContextPath()%>/"/>
-<link type="text/css" rel="stylesheet" href="static/css/style.css">
+<link type="text/css" rel="stylesheet" href="static/cs/c.css">
 <script type="text/javascript" src="static/script/jquery-1.7.2.js"></script>

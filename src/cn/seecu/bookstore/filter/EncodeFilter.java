@@ -9,8 +9,15 @@ public class EncodeFilter extends HttpFilter {
 
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
-        chain.doFilter(request,response);
+
+
+        String requestURL = String.valueOf(request.getRequestURL());
+        if (requestURL.contains(".css") || requestURL.contains(".js") || requestURL.contains(".png") || requestURL.contains(".jpg")) {
+            chain.doFilter(request, response);
+        } else {
+            request.setCharacterEncoding("utf-8");
+            response.setContentType("text/html;charset=utf-8");
+            chain.doFilter(request, response);
+        }
     }
 }
